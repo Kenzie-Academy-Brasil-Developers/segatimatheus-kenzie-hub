@@ -8,24 +8,24 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     async function loadingUser() {
-  //       const token = localStorage.getItem("@kenzie-hub:token");
+  useEffect(() => {
+    async function loadingUser() {
+      const token = localStorage.getItem("@kenzie-hub:token");
 
-  //       if (token) {
-  //         try {
-  //           api.defaults.headers.authorization = `Bearer ${token}`;
+      if (token) {
+        try {
+          api.defaults.headers.authorization = `Bearer ${token}`;
 
-  //           const { data } = await api.get("/sessions");
+          const { data } = await api.get("/sessions");
 
-  //           setUser(data);
-  //         } catch (error) {
-  //           console.error(error);
-  //         }
-  //       }
-  //     }
-  //     loadingUser();
-  //   }, []);
+          setUser(data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+    loadingUser();
+  }, []);
 
   async function loadUser(data) {
     try {
