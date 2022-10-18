@@ -28,6 +28,70 @@
   color: #61dafb;
 }
 
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  width: 90%;
+  max-width: 300px;
+  background: #212529;
+  box-shadow: 0px 4px 40px -10px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  padding: 15px;
+  border-radius: 5px;
+  color: white;
+}
+
+.modal-content > form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.modal-content > form > input {
+  height: 48px;
+
+  color: #f8f9fa;
+
+  background: #343b41;
+
+  border: 1px solid #343b41;
+  border-radius: 4px;
+}
+
+.modal-content > form > select {
+  height: 48px;
+
+  color: #f8f9fa;
+
+  background: #343b41;
+
+  border: 1px solid #343b41;
+  border-radius: 4px;
+}
+
+.modal-content > form > button {
+  height: 48px;
+
+  color: #f8f9fa;
+
+  background: #ff577f;
+
+  border: 1px solid #ff577f;
+  border-radius: 4.06066px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

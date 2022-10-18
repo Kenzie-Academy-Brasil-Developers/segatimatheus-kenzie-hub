@@ -38,7 +38,7 @@ export const Section = styled.section`
   justify-content: space-between;
   align-items: center;
 
-  height: 80px;
+  min-height: 80px;
 
   border-bottom: 1px solid #212529;
 
@@ -56,5 +56,49 @@ export const Section = styled.section`
     font-weight: 400;
     font-size: 12px;
     color: #868e96;
+  }
+
+  ul {
+    width: 100%;
+
+    background: #212529;
+    border-radius: 4px;
+
+    gap: 15px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 20px 0;
+  }
+`;
+
+export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Div = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const LiCard = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 50px;
+
+  width: 742px;
+  height: 48.73px;
+
+  background: #121214;
+  border-radius: 4px;
+
+  p {
+    padding: 0 15px;
   }
 `;
