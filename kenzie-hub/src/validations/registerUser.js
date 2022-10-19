@@ -15,6 +15,6 @@ export const schemaLogin = yup.object({
 });
 
 export const schemaTecnologie = yup.object({
-  title: yup.string().required("Titulo é obrigatório"),
+  title: yup.string(),
   status: yup.string().required("Status é obrigatório"),
 });

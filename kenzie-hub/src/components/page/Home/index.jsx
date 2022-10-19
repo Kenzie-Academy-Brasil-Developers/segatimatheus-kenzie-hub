@@ -6,8 +6,6 @@ import Modal from "react-modal";
 import Logo from "../../../assets/Logo.png";
 import api from "../../services/api";
 import { Header, Section, LiCard, Container, Div } from "./styled";
-import "../Home/";
-import { create } from "yup/lib/Reference";
 import { schemaTecnologie } from "../../../validations/registerUser";
 
 const Home = () => {
@@ -15,6 +13,9 @@ const Home = () => {
   const [curseMoodule, setCurseModule] = useState("");
   const [techs, setTechs] = useState([]);
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
+  const [li, setLi] = useState({});
+  const [state, setState] = useState(false);
 
   const token = localStorage.getItem("@kenzie-hub:token");
 
@@ -35,7 +36,7 @@ const Home = () => {
       }
     }
     getUser();
-  }, []);
+  }, [state]);
 
   function logout() {
     localStorage.setItem("@kenzie-hub:token", "");
@@ -44,6 +45,12 @@ const Home = () => {
 
   const openModal = () => setOpen(true);
   const closeModal = () => setOpen(false);
+
+  const openModal2 = (tech) => {
+    setLi(tech);
+    setOpen2(true);
+  };
+  const closeModal2 = () => setOpen2(false);
 
   const {
     register,
@@ -68,9 +75,34 @@ const Home = () => {
         },
       ]);
 
-      console.log(status, title, id);
+      setState(id);
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async function editTechnologie(data) {
+    try {
+      const idCard = li.id;
+      console.log(idCard);
+
+      await api.put(`/users/techs/${idCard}`, data);
+
+      setState(idCard);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function delTechnologie() {
+    try {
+      const idCard = li.id;
+
+      await api.delete(`/users/techs/${idCard}`);
+
+      setState(false);
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -126,13 +158,42 @@ const Home = () => {
         </Modal>
       </Container>
 
+      <Container className="container">
+        <Modal
+          isOpen={open2}
+          onRequestClose={closeModal2}
+          contentLabel="Example Modal"
+          overlayClassName="modal-overlay"
+          className="modal-content"
+        >
+          <Div>
+            <h2>Tecnologias Detalhes</h2>
+            <button onClick={closeModal2}>X</button>
+          </Div>
+
+          <form onSubmit={handleSubmit(editTechnologie)}>
+            <label htmlFor="">Status</label>
+            <select name="" id="status" {...register("status")}>
+              <option value="Iniciante">Iniciante</option>
+              <option value="Intermediário">Intermediário</option>
+              <option value="Avançado">Avançado</option>
+            </select>
+
+            <button type="submit">Atualizar</button>
+            <button onClick={delTechnologie}>Excluir</button>
+          </form>
+        </Modal>
+      </Container>
+
       <Section>
         <ul>
           {techs.map((tech) => (
-            <LiCard key={tech.id} onClick={openModal}>
-              <p>{tech.title}</p>
-              <p>{tech.status}</p>
-            </LiCard>
+            <>
+              <LiCard key={tech.id} onClick={() => openModal2(tech)}>
+                <p>{tech.title}</p>
+                <p>{tech.status}</p>
+              </LiCard>
+            </>
           ))}
         </ul>
       </Section>

@@ -95,10 +95,16 @@ export const LiCard = styled.li`
   width: 742px;
   height: 48.73px;
 
+  padding: 0 15px;
+
   background: #121214;
   border-radius: 4px;
 
   p {
     padding: 0 15px;
+  }
+
+  div {
+    display: flex;
   }
 `;
