@@ -1,11 +1,50 @@
-import { createContext, useEffect, useState } from "react";
+import React from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../components/services/api";
 
-export const AuthContext = createContext();
+interface IUserContext {
+  loadUser(data: IUserLogin): void;
+  registerUser(data: IUserRegister): void;
+  users: IUserLogin[];
+}
 
-const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+export interface IUserLogin {
+  email: string;
+  password: string;
+}
+
+export interface IUserRegister {
+  email: string;
+  password: string;
+  name: string;
+  bio: string;
+  contact: string;
+  course_module: string;
+}
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  course_module: string;
+  bio: string;
+  contact: string;
+  created_at: string;
+  updated_at: string;
+  techs: [];
+  works: [];
+  avatar_url: null;
+}
+
+interface IUserProviderProps {
+  children: ReactNode;
+}
+
+export const AuthContext = createContext<IUserContext>({} as IUserContext);
+
+const AuthProvider = ({ children }: IUserProviderProps) => {
+  const [user, setUser] = useState<IUser[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +66,7 @@ const AuthProvider = ({ children }) => {
     loadingUser();
   }, []);
 
-  async function loadUser(data) {
+  async function loadUser(data: IUserLogin) {
     try {
       const response = await api.post("/sessions", data);
 
@@ -44,7 +83,7 @@ const AuthProvider = ({ children }) => {
     }
   }
 
-  async function registerUser(data) {
+  async function registerUser(data: IUserRegister) {
     try {
       const response = await api.post("/users", data);
 

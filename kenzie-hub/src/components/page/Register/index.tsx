@@ -4,11 +4,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 
 import { Form, Div, Content } from "./styled";
-import Logo from "../../../assets/Logo.png";
+import { Logo } from "../../../assets/Logo.png";
 
 import { schema } from "../../../validations/registerUser";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { AuthContext, IUserRegister } from "../../../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import React from "react";
 
 const Register = () => {
   const { registerUser } = useContext(AuthContext);
@@ -17,7 +18,7 @@ const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<IUserRegister>({
     resolver: yupResolver(schema),
   });
 
@@ -40,7 +41,6 @@ const Register = () => {
           <label>Nome</label>
           <input
             type="text"
-            name=""
             id="name"
             placeholder="Digite aqui seu nome"
             {...register("name")}
@@ -50,7 +50,6 @@ const Register = () => {
           <label>Email</label>
           <input
             type="email"
-            name=""
             id="email"
             placeholder="Digite seu email"
             {...register("email")}
@@ -60,7 +59,6 @@ const Register = () => {
           <label>Senha</label>
           <input
             type="password"
-            name=""
             id="password"
             placeholder="Digite sua senha"
             {...register("password")}
@@ -70,7 +68,6 @@ const Register = () => {
           <label>Confitmar senha</label>
           <input
             type="password"
-            name=""
             id="confirmPassword"
             placeholder="Digite novamente sua senha"
             {...register("confirmPassword")}
@@ -80,7 +77,6 @@ const Register = () => {
           <label>Bio</label>
           <input
             type="text"
-            name=""
             id="bio"
             placeholder="Fale sobre você"
             {...register("bio")}
@@ -90,7 +86,6 @@ const Register = () => {
           <label>Contato</label>
           <input
             type="text"
-            name=""
             id="contact"
             placeholder="Opções de contato"
             {...register("contact")}
@@ -98,7 +93,7 @@ const Register = () => {
           <p>{errors.contact?.message}</p>
 
           <label>Selecionar módulo</label>
-          <select name="" id="module" {...register("course_module")}>
+          <select id="module" {...register("course_module")}>
             <option value="1">Primeiro módulo (Introdução ao Frontend)</option>
             <option value="2">Segundo módulo (Frontend Avançado)</option>
             <option value="3">Terceiro módulo (Introdução ao Backend)</option>

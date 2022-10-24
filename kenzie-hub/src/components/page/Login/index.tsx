@@ -4,8 +4,9 @@ import { Form, Content } from "./styled";
 import Logo from "../../../assets/Logo.png";
 import { useContext } from "react";
 import { schemaLogin } from "../../../validations/registerUser";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { AuthContext, IUserLogin } from "../../../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import React from "react";
 
 const Login = () => {
   const { loadUser } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<IUserLogin>({
     resolver: yupResolver(schemaLogin),
   });
 

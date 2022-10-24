@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import RoutesMain from "./components/routes";
 import AuthProvider from "./contexts/AuthContext";

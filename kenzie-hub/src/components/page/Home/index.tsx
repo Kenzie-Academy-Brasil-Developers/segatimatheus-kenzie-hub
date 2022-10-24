@@ -7,15 +7,31 @@ import Logo from "../../../assets/Logo.png";
 import api from "../../services/api";
 import { Header, Section, LiCard, Container, Div } from "./styled";
 import { schemaTecnologie } from "../../../validations/registerUser";
+import React from "react";
+
+interface ITechsCreate {
+  map(arg0: (tech: any) => JSX.Element): React.ReactNode;
+  id: string;
+  title: string | null;
+  status: string | null;
+}
+
+interface ITechsUpdate {
+  status: string;
+}
+
+interface IState {
+  state: boolean;
+}
 
 const Home = () => {
   const [user, setUser] = useState("");
   const [curseMoodule, setCurseModule] = useState("");
-  const [techs, setTechs] = useState([]);
+  const [techs, setTechs] = useState<ITechsCreate>([]);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
-  const [li, setLi] = useState({});
-  const [state, setState] = useState(false);
+  const [li, setLi] = useState<ITechsCreate>({});
+  const [state, setState] = useState<IState>(false);
 
   const token = localStorage.getItem("@kenzie-hub:token");
 
@@ -46,7 +62,7 @@ const Home = () => {
   const openModal = () => setOpen(true);
   const closeModal = () => setOpen(false);
 
-  const openModal2 = (tech) => {
+  const openModal2 = (tech: ITechsCreate) => {
     setLi(tech);
     setOpen2(true);
   };
@@ -56,11 +72,11 @@ const Home = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<ITechsCreate>({
     resolver: yupResolver(schemaTecnologie),
   });
 
-  async function createTechnologie(data) {
+  async function createTechnologie(data: ITechsCreate) {
     try {
       const response = await api.post("/users/techs", data);
 
@@ -75,13 +91,13 @@ const Home = () => {
         },
       ]);
 
-      setState(id);
+      setState(status);
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function editTechnologie(data) {
+  async function editTechnologie(data: ITechsUpdate) {
     try {
       const idCard = li.id;
       console.log(idCard);
@@ -147,7 +163,7 @@ const Home = () => {
             />
 
             <label htmlFor="">Status</label>
-            <select name="" id="status" {...register("status")}>
+            <select id="status" {...register("status")}>
               <option value="Iniciante">Iniciante</option>
               <option value="Intermediário">Intermediário</option>
               <option value="Avançado">Avançado</option>
@@ -173,7 +189,7 @@ const Home = () => {
 
           <form onSubmit={handleSubmit(editTechnologie)}>
             <label htmlFor="">Status</label>
-            <select name="" id="status" {...register("status")}>
+            <select id="status" {...register("status")}>
               <option value="Iniciante">Iniciante</option>
               <option value="Intermediário">Intermediário</option>
               <option value="Avançado">Avançado</option>
